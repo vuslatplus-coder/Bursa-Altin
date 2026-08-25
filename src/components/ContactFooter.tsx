@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { MessageSquare, Phone, MapPin, Clock, Copy, Check, ExternalLink } from 'lucide-react';
+import React from 'react';
+import { MessageSquare, Phone, MapPin, Clock, ExternalLink } from 'lucide-react';
 import { CONTACT_INFO } from '../data/mockData';
 
 interface ContactFooterProps {
@@ -7,95 +7,52 @@ interface ContactFooterProps {
 }
 
 export const ContactFooter: React.FC<ContactFooterProps> = ({ onOpenAppointment }) => {
-  const [copiedType, setCopiedType] = useState<string | null>(null);
-
-  const handleCopy = (text: string, type: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedType(type);
-    setTimeout(() => setCopiedType(null), 2500);
-  };
-
   return (
     <footer className="w-full bg-[#0c0c0c] border-t border-[#f7e7ce]/10 pt-16 pb-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto flex flex-col items-center text-center">
         
-        {/* Main Contact Section Matching Screenshot Exactly */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-12 sm:gap-20 md:gap-28 w-full">
+        {/* Main Contact Section - Side by side on mobile and desktop */}
+        <div className="flex flex-row items-start justify-center gap-6 xs:gap-10 sm:gap-20 md:gap-28 w-full max-w-2xl px-2">
           
           {/* WHATSAPP Block */}
-          <div className="flex flex-col items-center group cursor-pointer" id="footer-whatsapp-block">
+          <div className="flex-1 sm:flex-initial flex flex-col items-center group cursor-pointer" id="footer-whatsapp-block">
             <a
               href={`https://wa.me/${CONTACT_INFO.whatsappRaw}?text=${encodeURIComponent('Merhaba Bursa Altın, mücevherat ve güncel altın fiyatları hakkında bilgi almak istiyorum.')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center"
+              className="flex flex-col items-center text-center"
             >
               {/* WhatsApp Icon Box with Golden Outline */}
-              <div className="w-14 h-14 rounded-none border border-[#d4af37] flex items-center justify-center mb-4 bg-[#141414] group-hover:bg-[#d4af37]/15 group-hover:border-[#f2ca50] transition-all transform group-hover:-translate-y-1">
-                <MessageSquare className="w-6 h-6 text-[#d4af37] group-hover:text-[#f2ca50]" />
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-none border border-[#d4af37] flex items-center justify-center mb-3 bg-[#141414] group-hover:bg-[#d4af37]/15 group-hover:border-[#f2ca50] transition-all transform group-hover:-translate-y-1">
+                <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-[#d4af37] group-hover:text-[#f2ca50]" />
               </div>
-              <span className="text-[11px] font-sans-luxury uppercase tracking-[0.25em] text-[#d4af37] font-semibold">
+              <span className="text-[10px] sm:text-[11px] font-sans-luxury uppercase tracking-[0.2em] sm:tracking-[0.25em] text-[#d4af37] font-semibold">
                 WHATSAPP
               </span>
-              <span className="font-sans-luxury text-sm sm:text-base text-[#e5e2e1] font-medium tracking-wider mt-1 group-hover:text-[#f2ca50] transition-colors">
+              <span className="font-sans-luxury text-xs sm:text-base text-[#e5e2e1] font-medium tracking-wide sm:tracking-wider mt-1 group-hover:text-[#f2ca50] transition-colors whitespace-nowrap">
                 {CONTACT_INFO.whatsapp}
               </span>
             </a>
-            
-            <button
-              onClick={() => handleCopy(CONTACT_INFO.whatsapp, 'whatsapp')}
-              className="mt-2 text-[10px] text-[#e5e2e1]/40 hover:text-[#d4af37] flex items-center gap-1 transition-colors"
-            >
-              {copiedType === 'whatsapp' ? (
-                <>
-                  <Check className="w-3 h-3 text-emerald-400" />
-                  <span>Kopyalandı</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="w-3 h-3" />
-                  <span>Numarayı Kopyala</span>
-                </>
-              )}
-            </button>
           </div>
 
           {/* DÜKKAN / PHONE Block */}
-          <div className="flex flex-col items-center group cursor-pointer" id="footer-dukkan-block">
+          <div className="flex-1 sm:flex-initial flex flex-col items-center group cursor-pointer" id="footer-dukkan-block">
             <a
               href={`tel:${CONTACT_INFO.phoneRaw}`}
-              className="flex flex-col items-center"
+              className="flex flex-col items-center text-center"
             >
               {/* Phone Icon Box with Golden Outline */}
-              <div className="w-14 h-14 rounded-none border border-[#d4af37] flex items-center justify-center mb-4 bg-[#141414] group-hover:bg-[#d4af37]/15 group-hover:border-[#f2ca50] transition-all transform group-hover:-translate-y-1">
-                <Phone className="w-6 h-6 text-[#d4af37] group-hover:text-[#f2ca50]" />
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-none border border-[#d4af37] flex items-center justify-center mb-3 bg-[#141414] group-hover:bg-[#d4af37]/15 group-hover:border-[#f2ca50] transition-all transform group-hover:-translate-y-1">
+                <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-[#d4af37] group-hover:text-[#f2ca50]" />
               </div>
-              <span className="text-[11px] font-sans-luxury uppercase tracking-[0.25em] text-[#d4af37] font-semibold">
+              <span className="text-[10px] sm:text-[11px] font-sans-luxury uppercase tracking-[0.2em] sm:tracking-[0.25em] text-[#d4af37] font-semibold">
                 DÜKKAN
               </span>
-              <span className="font-sans-luxury text-sm sm:text-base text-[#e5e2e1] font-medium tracking-wider mt-1 group-hover:text-[#f2ca50] transition-colors">
+              <span className="font-sans-luxury text-xs sm:text-base text-[#e5e2e1] font-medium tracking-wide sm:tracking-wider mt-1 group-hover:text-[#f2ca50] transition-colors whitespace-nowrap">
                 {CONTACT_INFO.phone}
               </span>
             </a>
-
-            <button
-              onClick={() => handleCopy(CONTACT_INFO.phone, 'phone')}
-              className="mt-2 text-[10px] text-[#e5e2e1]/40 hover:text-[#d4af37] flex items-center gap-1 transition-colors"
-            >
-              {copiedType === 'phone' ? (
-                <>
-                  <Check className="w-3 h-3 text-emerald-400" />
-                  <span>Kopyalandı</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="w-3 h-3" />
-                  <span>Numarayı Kopyala</span>
-                </>
-              )}
-            </button>
           </div>
-
         </div>
 
         {/* Social Icons (Instagram, TikTok, Facebook) Matching Screenshot */}

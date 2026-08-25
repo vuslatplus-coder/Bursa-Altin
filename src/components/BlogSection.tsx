@@ -1,12 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BLOG_POSTS } from '../data/mockData';
 import { BlogPost } from '../types';
-import { BookOpen, Clock, User, ArrowRight, X, Tag, Share2, Check } from 'lucide-react';
+import { BookOpen, Clock, ArrowRight, X, Tag, Share2, Check } from 'lucide-react';
 
 export const BlogSection: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [activePost, setActivePost] = useState<BlogPost | null>(null);
   const [copiedLink, setCopiedLink] = useState(false);
+
+  useEffect(() => {
+    if (activePost) {
+      document.body.style.overflow = 'hidden';
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          setActivePost(null);
+        }
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.body.style.overflow = '';
+        window.removeEventListener('keydown', handleKeyDown);
+      };
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [activePost]);
 
   const categories = [
     { id: 'all', label: 'Tüm Yazılar' },
@@ -100,16 +118,7 @@ export const BlogSection: React.FC = () => {
                 </p>
               </div>
 
-              <div className="mt-6 pt-4 border-t border-[#f7e7ce]/10 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 rounded-full bg-[#d4af37]/20 border border-[#d4af37] flex items-center justify-center text-[10px] text-[#f2ca50] font-bold">
-                    {post.author.name[0]}
-                  </div>
-                  <span className="text-xs text-[#e5e2e1]/80 font-sans-luxury">
-                    {post.author.name}
-                  </span>
-                </div>
-
+              <div className="mt-6 pt-4 border-t border-[#f7e7ce]/10 flex items-center justify-end">
                 <span className="text-xs text-[#d4af37] flex items-center gap-1 group-hover:translate-x-1 transition-transform font-sans-luxury font-medium">
                   Yazıyı Oku
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -122,32 +131,44 @@ export const BlogSection: React.FC = () => {
 
       {/* Full Article Reader Modal */}
       {activePost && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md overflow-y-auto">
-          <div className="bg-[#141414] border border-[#d4af37] max-w-3xl w-full my-8 p-6 sm:p-10 relative">
-            <button
-              onClick={() => setActivePost(null)}
-              className="absolute top-4 right-4 text-[#e5e2e1]/60 hover:text-white p-2"
-            >
-              <X className="w-6 h-6" />
-            </button>
-
-            {/* Modal Header */}
-            <div className="mb-6">
-              <span className="inline-block px-3 py-1 bg-[#1a1813] border border-[#d4af37]/40 text-xs font-sans-luxury text-[#f2ca50] mb-3">
+        <div
+          id="blog-modal-backdrop"
+          onClick={() => setActivePost(null)}
+          className="fixed inset-0 z-50 flex items-start justify-center p-3 sm:p-6 md:p-8 bg-black/85 backdrop-blur-md overflow-y-auto"
+        >
+          <div
+            id="blog-modal-content"
+            onClick={(e) => e.stopPropagation()}
+            className="bg-[#141414] border border-[#d4af37] max-w-3xl w-full my-6 sm:my-10 p-6 sm:p-10 relative shadow-2xl animate-fade-in"
+          >
+            {/* Top Close Button Bar */}
+            <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#f7e7ce]/15">
+              <span className="inline-block px-3 py-1 bg-[#1a1813] border border-[#d4af37]/40 text-xs font-sans-luxury text-[#f2ca50]">
                 {activePost.category}
               </span>
+              <button
+                id="btn-close-blog-modal"
+                onClick={() => setActivePost(null)}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-[#1f1f1f] hover:bg-[#2a2a2a] text-[#e5e2e1] hover:text-[#f2ca50] border border-[#f7e7ce]/20 hover:border-[#d4af37] transition-all text-xs font-sans-luxury cursor-pointer"
+                title="Kapat (Esc)"
+              >
+                <span>Kapat</span>
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Modal Title & Meta */}
+            <div className="mb-6">
               <h2 className="font-serif-luxury text-2xl sm:text-3xl md:text-4xl text-[#f7e7ce] leading-tight">
                 {activePost.title}
               </h2>
-              <div className="flex flex-wrap items-center justify-between gap-4 mt-4 pt-4 border-t border-[#f7e7ce]/10 text-xs text-[#e5e2e1]/60 font-sans-luxury">
-                <div className="flex items-center gap-2">
-                  <User className="w-4 h-4 text-[#d4af37]" />
-                  <span>{activePost.author.name} ({activePost.author.role})</span>
+              <div className="flex flex-wrap items-center justify-between gap-4 mt-4 pt-3 border-t border-[#f7e7ce]/10 text-xs text-[#e5e2e1]/60 font-sans-luxury">
+                <div className="flex items-center gap-1.5 text-[#d4af37]">
+                  <Clock className="w-3.5 h-3.5" />
+                  <span>{activePost.readTime} okuma süresi</span>
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
                   <span>{activePost.date}</span>
-                  <span>•</span>
-                  <span>{activePost.readTime}</span>
                 </div>
               </div>
             </div>
@@ -163,14 +184,14 @@ export const BlogSection: React.FC = () => {
             </div>
 
             {/* Article Content Paragraphs */}
-            <div className="space-y-4 font-sans-luxury text-sm sm:text-base text-[#e5e2e1]/85 leading-relaxed">
+            <div className="space-y-5 font-sans-luxury text-sm sm:text-base text-[#e5e2e1]/90 leading-relaxed">
               {activePost.content.map((p, idx) => (
                 <p key={idx}>{p}</p>
               ))}
             </div>
 
-            {/* Tags & Sharing */}
-            <div className="mt-8 pt-6 border-t border-[#f7e7ce]/10 flex flex-wrap items-center justify-between gap-4">
+            {/* Tags & Sharing & Bottom Close */}
+            <div className="mt-10 pt-6 border-t border-[#f7e7ce]/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div className="flex flex-wrap gap-2 items-center">
                 <Tag className="w-4 h-4 text-[#d4af37]" />
                 {activePost.tags.map((tag, idx) => (
@@ -183,13 +204,23 @@ export const BlogSection: React.FC = () => {
                 ))}
               </div>
 
-              <button
-                onClick={handleShare}
-                className="px-4 py-2 border border-[#d4af37]/40 text-xs text-[#d4af37] hover:bg-[#d4af37]/10 flex items-center gap-1.5 font-sans-luxury"
-              >
-                {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5" />}
-                {copiedLink ? 'Bağlantı Kopyalandı' : 'Yazıyı Paylaş'}
-              </button>
+              <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
+                <button
+                  id="btn-share-blog"
+                  onClick={handleShare}
+                  className="px-4 py-2 border border-[#d4af37]/40 text-xs text-[#d4af37] hover:bg-[#d4af37]/10 flex items-center gap-1.5 font-sans-luxury cursor-pointer"
+                >
+                  {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Share2 className="w-3.5 h-3.5" />}
+                  {copiedLink ? 'Bağlantı Kopyalandı' : 'Yazıyı Paylaş'}
+                </button>
+                <button
+                  id="btn-close-blog-bottom"
+                  onClick={() => setActivePost(null)}
+                  className="px-4 py-2 bg-[#1f1f1f] hover:bg-[#2a2a2a] text-xs text-[#e5e2e1] hover:text-[#f2ca50] border border-[#f7e7ce]/20 hover:border-[#d4af37] transition-all font-sans-luxury cursor-pointer"
+                >
+                  Kapat
+                </button>
+              </div>
             </div>
           </div>
         </div>
