@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-gold: #d4af37;
+    --color-gold-bright: #f2ca50;
+    --color-champagne: #f7e7ce;
+    --color-dark-bg: #0f0f0f;
+    --color-surface-card: #181818;
+  }
+
+  body {
+    font-family: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #0f0f0f;
+    color: #e5e2e1;
+  }
+}
+
+.font-serif-luxury {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.font-cormorant {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-signature {
+  font-family: 'Alex Brush', cursive;
+}
+
+.font-sans-luxury {
+  font-family: 'Hanken Grotesk', system-ui, sans-serif;
+}
+
+/* Luxury Spotlight Glow */
+.gold-spotlight {
+  background: radial-gradient(ellipse 65% 50% at 50% 45%, rgba(212, 175, 55, 0.08) 0%, rgba(20, 20, 20, 0.02) 65%, transparent 100%);
+}
+
+.gold-spotlight-subtle {
+  background: radial-gradient(circle at 50% 50%, rgba(242, 202, 80, 0.05) 0%, transparent 70%);
+}
+
+.gold-glow-border {
+  box-shadow: 0 0 15px -3px rgba(212, 175, 55, 0.15);
+}
+
+.gold-text-shimmer {
+  background: linear-gradient(135deg, #fff 0%, #f2ca50 45%, #d4af37 60%, #fff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Sharp hairline borders */
+.border-hairline {
+  border-width: 1px;
+  border-color: rgba(247, 231, 206, 0.15);
+}
+
+.border-hairline-gold {
+  border-width: 1px;
+  border-color: rgba(212, 175, 55, 0.35);
+}
+
+/* Custom scrollbar for luxury feel */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0f0f0f;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2a2a;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d4af37;
+}

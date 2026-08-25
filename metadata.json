@@ -1,0 +1,6 @@
+{
+  "name": "Bursa Altın - Mehmet Hamdemirci Kuyumculuk",
+  "description": "Bursa Altın lüks mücevherat ve altın deneyimi. Canlı altın kurları, manifesto, özel koleksiyon önizlemesi ve VIP bekleme listesi.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

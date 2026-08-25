@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 360" width="100%" height="100%">
+  <defs>
+    <!-- Solid Pure Gold matching the uploaded logo -->
+    <linearGradient id="logoGold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stopColor="#DF9F00" />
+      <stop offset="50%" stopColor="#E5A700" />
+      <stop offset="100%" stopColor="#D99700" />
+    </linearGradient>
+    <filter id="softGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.5" />
+    </filter>
+  </defs>
+
+  <!-- ================= 1. "BURSA" GOLD LETTERS ================= -->
+  <g id="BURSA" fill="url(#logoGold)" filter="url(#softGlow)">
+    <!-- B -->
+    <path d="M 145 35 H 182 C 197 35 206 41 206 53 C 206 61 200 67 192 70 C 202 73 209 80 209 93 C 209 107 198 115 180 115 H 145 V 35 Z M 165 51 V 65 H 178 C 184 65 187 62 187 58 C 187 54 184 51 178 51 H 165 Z M 165 80 V 99 H 180 C 187 99 190 95 190 89 C 190 84 186 80 180 80 H 165 Z" />
+    
+    <!-- U -->
+    <path d="M 245 35 H 266 V 82 C 266 93 273 99 284 99 C 295 99 302 93 302 82 V 35 H 323 V 81 C 323 103 309 115 284 115 C 259 115 245 103 245 81 V 35 Z" />
+    
+    <!-- R -->
+    <path d="M 362 35 H 406 C 424 35 435 45 435 59 C 435 70 427 79 415 82 L 439 115 H 413 L 393 88 H 383 V 115 H 362 V 35 Z M 383 51 V 72 H 402 C 409 72 414 68 414 62 C 414 55 409 51 402 51 H 383 Z" />
+    
+    <!-- S -->
+    <path d="M 522 55 C 516 52 508 50 499 50 C 490 50 484 54 484 60 C 484 66 489 69 501 72 L 510 74 C 528 79 537 87 537 100 C 537 112 526 116 502 116 C 487 116 476 112 468 106 L 476 90 C 484 96 493 99 503 99 C 512 99 516 96 516 90 C 516 84 511 81 498 78 L 489 76 C 473 72 464 64 464 53 C 464 40 475 34 498 34 C 510 34 520 37 528 41 L 522 55 Z" />
+    
+    <!-- A -->
+    <path d="M 570 115 L 599 35 H 624 L 653 115 H 630 L 624 96 H 598 L 592 115 H 570 Z M 603 80 H 619 L 611 55 L 603 80 Z" />
+  </g>
+
+  <!-- ================= 2. GEOMETRIC GOLD DIAMOND ================= -->
+  <g id="DIAMOND" stroke="url(#logoGold)" fill="none" stroke-linejoin="miter" stroke-miterlimit="10" filter="url(#softGlow)">
+    <!-- Outer Diamond Contour -->
+    <polygon 
+      points="680,48 780,48 836,94 756,196 695,116 718,70" 
+      stroke-width="17" 
+      stroke-linecap="square"
+    />
+    
+    <!-- Inner Parallel Facet Contour -->
+    <polygon 
+      points="718,70 766,70 798,96 756,155 720,114" 
+      stroke-width="11" 
+      stroke-linecap="square"
+    />
+  </g>
+
+  <!-- ================= 3. "ALTIN" MULTI-LINE WHITE WIREFRAME ================= -->
+  <g id="ALTIN" stroke="#FFFFFF" fill="none" stroke-linecap="square" stroke-linejoin="miter">
+    <!-- A (Triple-stroke multi-line outline) -->
+    <g transform="translate(142, 140)">
+      <!-- Outer boundary -->
+      <path d="M 0 100 L 40 0 H 54 L 94 100 H 78 L 70 78 H 24 L 16 100 H 0 Z" stroke-width="1.8" />
+      <polygon points="30,64 64,64 47,20" stroke-width="1.8" />
+      <!-- Middle wireline -->
+      <path d="M 8 100 L 43 7 H 51 L 86 100" stroke-width="1.4" />
+      <line x1="26" y1="71" x2="68" y2="71" stroke-width="1.4" />
+      <!-- Inner core line -->
+      <path d="M 16 100 L 47 16 L 78 100" stroke-width="1.2" />
+    </g>
+
+    <!-- L (Multi-line wireframe) -->
+    <g transform="translate(262, 140)">
+      <path d="M 0 0 H 16 V 82 H 58 V 100 H 0 V 0 Z" stroke-width="1.8" />
+      <path d="M 8 0 V 91 H 58" stroke-width="1.4" />
+      <path d="M 16 0 V 82 H 58" stroke-width="1.2" />
+    </g>
+
+    <!-- T (Multi-line wireframe) -->
+    <g transform="translate(350, 140)">
+      <path d="M 0 0 H 74 V 18 H 46 V 100 H 28 V 18 H 0 V 0 Z" stroke-width="1.8" />
+      <line x1="0" y1="9" x2="74" y2="9" stroke-width="1.4" />
+      <line x1="37" y1="18" x2="37" y2="100" stroke-width="1.4" />
+      <line x1="0" y1="18" x2="28" y2="18" stroke-width="1.2" />
+      <line x1="46" y1="18" x2="74" y2="18" stroke-width="1.2" />
+    </g>
+
+    <!-- I (Multi-line wireframe) -->
+    <g transform="translate(454, 140)">
+      <path d="M 0 0 H 18 V 100 H 0 V 0 Z" stroke-width="1.8" />
+      <line x1="9" y1="0" x2="9" y2="100" stroke-width="1.4" />
+    </g>
+
+    <!-- N (Multi-line wireframe) -->
+    <g transform="translate(502, 140)">
+      <path d="M 0 0 H 16 L 52 70 V 0 H 68 V 100 H 52 L 16 30 V 100 H 0 V 0 Z" stroke-width="1.8" />
+      <line x1="8" y1="0" x2="8" y2="100" stroke-width="1.4" />
+      <line x1="16" y1="6" x2="52" y2="76" stroke-width="1.4" />
+      <line x1="60" y1="0" x2="60" y2="100" stroke-width="1.4" />
+    </g>
+  </g>
+
+  <!-- ================= 4. "Mehmet Hamdemirci" SIGNATURE SCRIPT ================= -->
+  <g id="SIGNATURE" fill="url(#logoGold)" stroke="url(#logoGold)" filter="url(#softGlow)">
+    <!-- Distinctive sweeping arc extending high above the signature -->
+    <path 
+      d="M 522 284 C 540 205 605 210 610 248 C 612 268 602 282 590 286" 
+      stroke-width="5.5" 
+      fill="none" 
+      stroke-linecap="round"
+    />
+
+    <!-- Signature Calligraphy Script Text -->
+    <text 
+      x="500" 
+      y="300" 
+      text-anchor="middle" 
+      font-family="'Brush Script MT', 'Dancing Script', 'Alex Brush', 'Great Vibes', cursive, sans-serif" 
+      font-size="64" 
+      font-weight="bold" 
+      font-style="italic"
+      stroke="none"
+    >
+      Mehmet Hamdemirci
+    </text>
+  </g>
+</svg>
