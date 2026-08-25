@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { HeroComingSoon } from './components/HeroComingSoon';
 import { LiveGoldRates } from './components/LiveGoldRates';
@@ -8,6 +8,7 @@ import { ContactFooter } from './components/ContactFooter';
 import { ManifestoModal } from './components/ManifestoModal';
 import { WaitlistModal } from './components/WaitlistModal';
 import { AppointmentModal } from './components/AppointmentModal';
+import { LuxuryLoader } from './components/LuxuryLoader';
 import { WaitlistSubscriber } from './types';
 
 export default function App() {
@@ -15,8 +16,17 @@ export default function App() {
   const [manifestoOpen, setManifestoOpen] = useState<boolean>(false);
   const [waitlistOpen, setWaitlistOpen] = useState<boolean>(false);
   const [appointmentOpen, setAppointmentOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [subscribers, setSubscribers] = useState<WaitlistSubscriber[]>([]);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Initial page load simulation to demonstrate the luxury blurred loader
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1800);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleSubscribe = (subscriber: WaitlistSubscriber) => {
     setSubscribers((prev) => [...prev, subscriber]);
@@ -96,6 +106,13 @@ export default function App() {
       <AppointmentModal
         isOpen={appointmentOpen}
         onClose={() => setAppointmentOpen(false)}
+      />
+
+      {/* Luxury Blurred Logo Loader */}
+      <LuxuryLoader
+        isLoading={isLoading}
+        onClose={() => setIsLoading(false)}
+        message="Bursa Altın Deneyimi Yükleniyor"
       />
     </div>
   );
