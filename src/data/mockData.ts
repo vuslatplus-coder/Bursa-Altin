@@ -265,6 +265,5 @@ export const CONTACT_INFO = {
   address: 'Ulucami doğusu kapalı çarşı girişi no:17 Bursa / Türkiye',
   hours: 'Pazartesi - Cumartesi: 09:00 - 19:30',
   instagram: 'https://instagram.com/bursaaltin',
-  x: 'https://x.com/bursaaltin',
   facebook: 'https://facebook.com/bursaaltin'
 };

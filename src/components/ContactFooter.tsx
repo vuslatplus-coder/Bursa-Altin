@@ -1,120 +1,238 @@
 import React from 'react';
-import { MessageSquare, Phone, MapPin, Clock, ExternalLink } from 'lucide-react';
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  ShieldCheck,
+  Truck,
+  RotateCcw,
+  Sparkles,
+  CreditCard,
+  MessageSquare,
+  Instagram,
+  Facebook,
+  Award,
+  ChevronRight
+} from 'lucide-react';
 import { CONTACT_INFO } from '../data/mockData';
+import brandLogoImage from '../assets/images/regenerated_image_1787651210294.png';
+import { FooterLink } from '../types';
+import { DEFAULT_FOOTER_LINKS } from '../data/defaultContentPagesData';
 
 interface ContactFooterProps {
-  onOpenAppointment: () => void;
+  onOpenAppointment?: (prefill?: string) => void;
+  onOpenManifesto: () => void;
+  onNavigateCategory: (categoryKey: string) => void;
+  onOpenCorporatePage?: (pageSlug: string) => void;
+  onOpenGuideArticle?: (slug: string) => void;
+  onNavigateTab?: (tab: 'anasayfa' | 'katalog' | 'koleksiyon' | 'kurlar' | 'rehber' | 'altinini-getir') => void;
+  onOpenAdmin?: () => void;
+  footerLinks?: FooterLink[];
 }
 
-export const ContactFooter: React.FC<ContactFooterProps> = ({ onOpenAppointment }) => {
+export const ContactFooter: React.FC<ContactFooterProps> = ({
+  onOpenAppointment,
+  onOpenManifesto,
+  onNavigateCategory,
+  onOpenCorporatePage,
+  onOpenGuideArticle,
+  onNavigateTab,
+  onOpenAdmin,
+  footerLinks = DEFAULT_FOOTER_LINKS,
+}) => {
+  const activeLinks = (footerLinks || []).filter((l) => l.active !== false);
+
+  const kurumsalLinks = activeLinks.filter((l) => l.group === 'kurumsal');
+  const musteriLinks = activeLinks.filter((l) => l.group === 'musteri-rehberi');
+  const koleksiyonLinks = activeLinks.filter((l) => l.group === 'koleksiyonlar');
+
+  const handleLinkClick = (link: FooterLink) => {
+    const target = link.link;
+    if (target.startsWith('page:')) {
+      const slug = target.replace('page:', '');
+      if (onOpenCorporatePage) {
+        onOpenCorporatePage(slug);
+      }
+    } else if (target.startsWith('guide:')) {
+      const slug = target.replace('guide:', '');
+      if (onOpenGuideArticle) {
+        onOpenGuideArticle(slug);
+      }
+      if (onNavigateTab) {
+        onNavigateTab('rehber');
+      }
+    } else if (target.startsWith('tab:')) {
+      const tab = target.replace('tab:', '') as any;
+      if (onNavigateTab) {
+        onNavigateTab(tab);
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (target.startsWith('kategori:')) {
+      const cat = target.replace('kategori:', '');
+      onNavigateCategory(cat);
+    } else if (target === 'action:appointment') {
+      onOpenAppointment();
+    } else if (target === 'action:manifesto') {
+      onOpenManifesto();
+    } else {
+      onNavigateCategory(target);
+    }
+  };
+
   return (
-    <footer className="w-full bg-[#0c0c0c] border-t border-[#f7e7ce]/10 pt-16 pb-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto flex flex-col items-center text-center">
-        
-        {/* Main Contact Section - Side by side on mobile and desktop */}
-        <div className="flex flex-row items-start justify-center gap-6 xs:gap-10 sm:gap-20 md:gap-28 w-full max-w-2xl px-2">
+    <footer className="bg-white border-t border-gray-200 text-gray-700 font-sans-luxury">
+      {/* 2. MAIN FOOTER LINKS */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           
-          {/* WHATSAPP Block */}
-          <div className="flex-1 sm:flex-initial flex flex-col items-center group cursor-pointer" id="footer-whatsapp-block">
-            <a
-              href={`https://wa.me/${CONTACT_INFO.whatsappRaw}?text=${encodeURIComponent('Merhaba Bursa Altın, mücevherat ve güncel altın fiyatları hakkında bilgi almak istiyorum.')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col items-center text-center"
-            >
-              {/* WhatsApp Icon Box with Golden Outline */}
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-none border border-[#d4af37] flex items-center justify-center mb-3 bg-[#141414] group-hover:bg-[#d4af37]/15 group-hover:border-[#f2ca50] transition-all transform group-hover:-translate-y-1">
-                <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-[#d4af37] group-hover:text-[#f2ca50]" />
+          {/* Col 1: Brand & Heritage */}
+          <div className="lg:col-span-2 space-y-4">
+            <img
+              src={brandLogoImage}
+              alt="Mehmet Hamdemirci Kuyumculuk"
+              referrerPolicy="no-referrer"
+              className="h-12 w-auto object-contain"
+            />
+            <p className="text-xs text-gray-600 leading-relaxed max-w-sm">
+              1984 yılından bu yana Bursa Tarihi Kapalıçarşı Bedesten'de usta sarraflık geleneği, dürüst ticaret ve güven anlayışıyla 22 ayar altın, pırlanta ve yatırım sarrafiyesi sunuyoruz.
+            </p>
+
+            <div className="space-y-2 pt-2 text-xs">
+              <div className="flex items-start gap-2 text-gray-700">
+                <MapPin className="w-4 h-4 text-[#c89d3a] shrink-0 mt-0.5" />
+                <span>{CONTACT_INFO.address}</span>
               </div>
-              <span className="text-[10px] sm:text-[11px] font-sans-luxury uppercase tracking-[0.2em] sm:tracking-[0.25em] text-[#d4af37] font-semibold">
-                WHATSAPP
-              </span>
-              <span className="font-sans-luxury text-xs sm:text-base text-[#e5e2e1] font-medium tracking-wide sm:tracking-wider mt-1 group-hover:text-[#f2ca50] transition-colors whitespace-nowrap">
-                {CONTACT_INFO.whatsapp}
-              </span>
-            </a>
+              <div className="flex items-center gap-2 text-gray-700">
+                <Phone className="w-4 h-4 text-[#c89d3a] shrink-0" />
+                <a href={`tel:${CONTACT_INFO.phoneRaw}`} className="hover:text-[#c89d3a] font-mono font-medium">
+                  {CONTACT_INFO.phone}
+                </a>
+              </div>
+              <div className="flex items-center gap-2 text-emerald-700 font-semibold">
+                <MessageSquare className="w-4 h-4 shrink-0" />
+                <a
+                  href={`https://wa.me/${CONTACT_INFO.whatsappRaw}?text=${encodeURIComponent('Merhaba Mehmet Hamdemirci yetkilisi, bilgi almak istiyorum.')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  WhatsApp: {CONTACT_INFO.whatsapp}
+                </a>
+              </div>
+            </div>
           </div>
 
-          {/* DÜKKAN / PHONE Block */}
-          <div className="flex-1 sm:flex-initial flex flex-col items-center group cursor-pointer" id="footer-dukkan-block">
-            <a
-              href={`tel:${CONTACT_INFO.phoneRaw}`}
-              className="flex flex-col items-center text-center"
-            >
-              {/* Phone Icon Box with Golden Outline */}
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-none border border-[#d4af37] flex items-center justify-center mb-3 bg-[#141414] group-hover:bg-[#d4af37]/15 group-hover:border-[#f2ca50] transition-all transform group-hover:-translate-y-1">
-                <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-[#d4af37] group-hover:text-[#f2ca50]" />
-              </div>
-              <span className="text-[10px] sm:text-[11px] font-sans-luxury uppercase tracking-[0.2em] sm:tracking-[0.25em] text-[#d4af37] font-semibold">
-                DÜKKAN
-              </span>
-              <span className="font-sans-luxury text-xs sm:text-base text-[#e5e2e1] font-medium tracking-wide sm:tracking-wider mt-1 group-hover:text-[#f2ca50] transition-colors whitespace-nowrap">
-                {CONTACT_INFO.phone}
-              </span>
-            </a>
+          {/* Col 2: Koleksiyonlar (Dynamic Firestore footer links) */}
+          <div className="space-y-3">
+            <h4 className="font-serif text-sm font-bold text-gray-900 uppercase tracking-wider">
+              Koleksiyonlar
+            </h4>
+            <ul className="space-y-2 text-xs text-gray-600">
+              {koleksiyonLinks.map((link) => (
+                <li key={link.id}>
+                  <button
+                    onClick={() => handleLinkClick(link)}
+                    className="hover:text-[#996515] transition-colors text-left"
+                  >
+                    {link.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
+
+          {/* Col 3: Kurumsal Sayfalar (Hakkımızda, Mağazamız, Neden Bursa Altın?, vb.) */}
+          <div className="space-y-3">
+            <h4 className="font-serif text-sm font-bold text-gray-900 uppercase tracking-wider">
+              Kurumsal
+            </h4>
+            <ul className="space-y-2 text-xs text-gray-600">
+              {kurumsalLinks.map((link) => (
+                <li key={link.id}>
+                  <button
+                    onClick={() => handleLinkClick(link)}
+                    className="hover:text-[#996515] transition-colors text-left"
+                  >
+                    {link.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Col 4: Müşteri Rehberi & Hizmetler (Altınını Getir, Altın Rehberi, vb.) */}
+          <div className="space-y-3">
+            <h4 className="font-serif text-sm font-bold text-gray-900 uppercase tracking-wider">
+              Hizmetler & Rehber
+            </h4>
+            <ul className="space-y-2 text-xs text-gray-600">
+              {musteriLinks.map((link) => (
+                <li key={link.id}>
+                  <button
+                    onClick={() => handleLinkClick(link)}
+                    className="hover:text-[#996515] transition-colors text-left"
+                  >
+                    {link.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+
         </div>
-
-        {/* Social Icons (Instagram, TikTok, Facebook) Matching Screenshot */}
-        <div className="mt-12 flex items-center justify-center gap-6">
-          {/* Instagram */}
-          <a
-            href={CONTACT_INFO.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Instagram"
-            className="w-10 h-10 border border-[#f7e7ce]/20 hover:border-[#d4af37] flex items-center justify-center text-[#e5e2e1] hover:text-[#f2ca50] hover:bg-[#d4af37]/10 transition-all"
-          >
-            <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-            </svg>
-          </a>
-
-          {/* X (formerly Twitter) */}
-          <a
-            href={CONTACT_INFO.x}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="X"
-            className="w-10 h-10 border border-[#f7e7ce]/20 hover:border-[#d4af37] flex items-center justify-center text-[#e5e2e1] hover:text-[#f2ca50] hover:bg-[#d4af37]/10 transition-all"
-          >
-            <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-            </svg>
-          </a>
-
-          {/* Facebook */}
-          <a
-            href={CONTACT_INFO.facebook}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Facebook"
-            className="w-10 h-10 border border-[#f7e7ce]/20 hover:border-[#d4af37] flex items-center justify-center text-[#e5e2e1] hover:text-[#f2ca50] hover:bg-[#d4af37]/10 transition-all"
-          >
-            <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-              <path d="M9 8H6v4h3v12h5V12h3.642L18 8h-4V6.333C14 5.374 14.5 5 15.688 5H18V0h-3.808C10.596 0 9 1.583 9 4.615V8z" />
-            </svg>
-          </a>
-        </div>
-
-        {/* Address and Working Hours Box */}
-        <div className="mt-8 pt-8 border-t border-[#f7e7ce]/10 max-w-xl text-center">
-          <p className="text-xs text-[#e5e2e1]/70 font-sans-luxury flex items-center justify-center gap-1.5">
-            <MapPin className="w-3.5 h-3.5 text-[#d4af37]" />
-            {CONTACT_INFO.address}
-          </p>
-          <p className="text-xs text-[#e5e2e1]/50 font-sans-luxury flex items-center justify-center gap-1.5 mt-1.5">
-            <Clock className="w-3.5 h-3.5 text-[#d4af37]" />
-            {CONTACT_INFO.hours}
-          </p>
-        </div>
-
-        {/* The Exact Footer Copyright from Screenshot */}
-        <div className="mt-8 text-xs font-sans-luxury text-[#e5e2e1]/60 tracking-wider">
-          © 2026 Bursa Altın. Zarafetin ve güvenin adresi.
-        </div>
-
       </div>
+
+      {/* 3. PAYMENT LOGOS & SECURITY BADGES */}
+      <div className="bg-[#f8f9fa] border-t border-gray-200 py-6 px-4">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500">
+          
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+            <span className="font-semibold text-gray-700">Taksit & Güvenli Ödeme:</span>
+            <span className="px-2 py-1 bg-white border border-gray-300 rounded font-bold text-gray-800 text-[10px]">
+              Bonus
+            </span>
+            <span className="px-2 py-1 bg-white border border-gray-300 rounded font-bold text-gray-800 text-[10px]">
+              World
+            </span>
+            <span className="px-2 py-1 bg-white border border-gray-300 rounded font-bold text-gray-800 text-[10px]">
+              Maximum
+            </span>
+            <span className="px-2 py-1 bg-white border border-gray-300 rounded font-bold text-gray-800 text-[10px]">
+              Axess
+            </span>
+            <span className="px-2 py-1 bg-white border border-gray-300 rounded font-bold text-gray-800 text-[10px]">
+              CardFinans
+            </span>
+            <span className="px-2 py-1 bg-white border border-gray-300 rounded font-bold text-gray-800 text-[10px]">
+              Troy
+            </span>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <span className="flex items-center gap-1 font-semibold text-emerald-700">
+              <ShieldCheck className="w-4 h-4" />
+              256-Bit SSL & 3D Secure Güvenlik
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+      {/* 4. COPYRIGHT */}
+      <div className="bg-white border-t border-gray-200 py-4 px-4 text-center text-[11px] text-gray-400">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+          <span>
+            © {new Date().getFullYear()} Mehmet Hamdemirci Kuyumculuk San. ve Tic. Ltd. Şti. Tüm hakları saklıdır.
+          </span>
+          <div className="flex items-center gap-3">
+            <span>
+              Bursa Kapalıçarşı Tarihi Bedesten No: 16 • Osmangazi / BURSA
+            </span>
+          </div>
+        </div>
+      </div>
+
     </footer>
   );
 };
