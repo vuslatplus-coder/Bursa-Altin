@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { SNEAK_PEEK_COLLECTION } from '../data/mockData';
 import { CollectionItem } from '../types';
-import { Sparkles, Eye, X, Check, Gem, ShieldCheck, MessageSquare, Calendar } from 'lucide-react';
-import { CONTACT_INFO } from '../data/productsData';
+import { Sparkles, Eye, X, Check, Gem, ShieldCheck, Calendar } from 'lucide-react';
 
 interface CollectionPreviewProps {
-  onOpenAppointment?: () => void;
-  onOpenWaitlist?: () => void;
+  onOpenAppointment: () => void;
+  onOpenWaitlist: () => void;
 }
 
-export const CollectionPreview: React.FC<CollectionPreviewProps> = () => {
+export const CollectionPreview: React.FC<CollectionPreviewProps> = ({
+  onOpenAppointment,
+  onOpenWaitlist,
+}) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [activeItem, setActiveItem] = useState<CollectionItem | null>(null);
 
@@ -26,31 +28,31 @@ export const CollectionPreview: React.FC<CollectionPreviewProps> = () => {
     : SNEAK_PEEK_COLLECTION.filter((i) => i.category === selectedCategory);
 
   return (
-    <div className="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" id="collection-preview-section">
+    <div className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" id="collection-preview-section">
       {/* Section Header */}
-      <div className="text-center max-w-2xl mx-auto mb-8">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 border border-amber-200 text-[10px] font-sans-luxury uppercase tracking-widest text-[#996515] font-bold rounded-full mb-3">
-          <Sparkles className="w-3.5 h-3.5 text-[#c89d3a]" />
-          Özel Seri & Lansman Koleksiyonu
+      <div className="text-center max-w-3xl mx-auto mb-12">
+        <div className="inline-flex items-center gap-2 px-3 py-1 border border-[#d4af37]/30 bg-[#161616] text-[10px] font-sans-luxury uppercase tracking-[0.25em] text-[#f2ca50] mb-4">
+          <Sparkles className="w-3.5 h-3.5" />
+          Önizleme & Lansman Koleksiyonu
         </div>
-        <h2 className="font-serif-luxury text-2xl sm:text-3xl text-gray-900 font-bold">
+        <h2 className="font-serif-luxury text-3xl sm:text-4xl text-[#f7e7ce]">
           Zarafetin ve Ustalığın Geleceği
         </h2>
-        <p className="font-sans-luxury text-xs sm:text-sm text-gray-500 mt-2">
-          Bursa Altın dijital vitrininde sergilenen, Mehmet Hamdemirci atölyelerinde sınırlı sayıda üretilen seçkin tasarımlara göz atın.
+        <p className="font-sans-luxury text-sm text-[#e5e2e1]/70 mt-3">
+          Bursa Altın dijital vitrininde yakında sergilenecek, Mehmet Hamdemirci atölyelerinde sınırlı sayıda üretilen seçkin tasarımlara göz atın.
         </p>
       </div>
 
       {/* Category Pills */}
-      <div className="flex flex-wrap justify-center gap-2 mb-8">
+      <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10">
         {categories.map((cat) => (
           <button
             key={cat.id}
             onClick={() => setSelectedCategory(cat.id)}
-            className={`px-3.5 py-1.5 text-xs font-sans-luxury font-bold uppercase tracking-wider rounded-md transition-all ${
+            className={`px-4 py-2 text-xs font-sans-luxury uppercase tracking-wider transition-all border ${
               selectedCategory === cat.id
-                ? 'bg-[#c89d3a] text-white shadow-xs'
-                : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
+                ? 'border-[#d4af37] bg-[#d4af37]/15 text-[#f2ca50]'
+                : 'border-[#f7e7ce]/15 text-[#e5e2e1]/70 hover:border-[#d4af37]/40 hover:text-white'
             }`}
           >
             {cat.label}
@@ -59,55 +61,56 @@ export const CollectionPreview: React.FC<CollectionPreviewProps> = () => {
       </div>
 
       {/* Jewelry Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {filteredItems.map((item) => (
           <div
             key={item.id}
-            className="group bg-white border border-gray-200 rounded-xl hover:border-[#c89d3a] hover:shadow-md transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-2xs"
+            className="group bg-[#141414] border border-[#f7e7ce]/15 hover:border-[#d4af37] transition-all duration-300 flex flex-col justify-between overflow-hidden"
           >
             {/* Image Container */}
-            <div className="relative aspect-4/3 overflow-hidden bg-gray-100">
+            <div className="relative aspect-4/3 overflow-hidden bg-[#0a0a0a]">
               <img
                 src={item.imageUrl}
                 alt={item.title}
                 referrerPolicy="no-referrer"
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-transparent to-transparent opacity-80" />
               
               {/* Badge */}
-              <div className="absolute top-3 left-3 px-2 py-0.5 bg-white/90 backdrop-blur-xs border border-gray-200 text-[10px] font-sans-luxury font-bold uppercase tracking-wider text-[#996515] rounded">
+              <div className="absolute top-3 left-3 px-2.5 py-1 bg-[#0f0f0f]/90 border border-[#d4af37]/40 text-[10px] font-sans-luxury uppercase tracking-widest text-[#f2ca50]">
                 {item.karat}
               </div>
 
               {item.isExclusive && (
-                <div className="absolute top-3 right-3 px-2 py-0.5 bg-[#c89d3a] text-white text-[9px] font-sans-luxury font-bold uppercase tracking-wider rounded">
+                <div className="absolute top-3 right-3 px-2 py-0.5 bg-[#d4af37] text-[#0f0f0f] text-[9px] font-sans-luxury font-bold uppercase tracking-widest">
                   Özel Seri
                 </div>
               )}
             </div>
 
             {/* Content Details */}
-            <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+            <div className="p-5 flex-1 flex flex-col justify-between">
               <div>
-                <span className="text-[10px] font-sans-luxury uppercase tracking-wider text-[#996515] font-bold">
+                <span className="text-[10px] font-sans-luxury uppercase tracking-[0.2em] text-[#d4af37]">
                   {item.categoryLabel}
                 </span>
-                <h3 className="font-serif-luxury text-base text-gray-900 mt-1 font-bold line-clamp-1">
+                <h3 className="font-serif-luxury text-lg text-[#f7e7ce] mt-1 font-normal line-clamp-1">
                   {item.title}
                 </h3>
-                <p className="font-sans-luxury text-xs text-gray-500 mt-1.5 line-clamp-2 leading-relaxed">
+                <p className="font-sans-luxury text-xs text-[#e5e2e1]/65 mt-2 line-clamp-2 leading-relaxed">
                   {item.description}
                 </p>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between">
-                <span className="text-xs font-sans-luxury text-gray-400 flex items-center gap-1">
-                  <Calendar className="w-3.5 h-3.5 text-[#c89d3a]" />
+              <div className="mt-5 pt-4 border-t border-[#f7e7ce]/10 flex items-center justify-between">
+                <span className="text-[11px] font-sans-luxury text-[#e5e2e1]/50 flex items-center gap-1">
+                  <Calendar className="w-3 h-3 text-[#d4af37]" />
                   {item.estimatedLaunch}
                 </span>
                 <button
                   onClick={() => setActiveItem(item)}
-                  className="px-2.5 py-1 text-xs font-sans-luxury font-bold text-[#996515] bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded transition-colors flex items-center gap-1"
+                  className="px-3 py-1.5 text-xs font-sans-luxury tracking-wider text-[#d4af37] border border-[#d4af37]/40 hover:border-[#f2ca50] hover:bg-[#d4af37]/10 transition-colors flex items-center gap-1"
                 >
                   <Eye className="w-3 h-3" />
                   İncele
@@ -119,41 +122,39 @@ export const CollectionPreview: React.FC<CollectionPreviewProps> = () => {
       </div>
 
       {/* Custom Commission Banner */}
-      <div className="mt-10 p-6 sm:p-8 bg-gradient-to-r from-amber-50 to-[#fdfaf2] border border-amber-200 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-xs">
+      <div className="mt-14 p-8 bg-[#161616] border border-[#d4af37]/40 flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="max-w-2xl">
-          <span className="text-[11px] font-sans-luxury uppercase tracking-wider text-[#996515] font-bold">
-            Özel Mücevher Siparişi & Atölye
+          <span className="text-[11px] font-sans-luxury uppercase tracking-[0.25em] text-[#d4af37]">
+            Özel Mücevher Siparişi
           </span>
-          <h3 className="font-serif-luxury text-xl sm:text-2xl text-gray-900 font-bold mt-1">
+          <h3 className="font-serif-luxury text-2xl text-[#f7e7ce] mt-1">
             Kendi Eşsiz Tasarımınızı Mehmet Hamdemirci Atölyesinde Hayata Geçirin
           </h3>
-          <p className="font-sans-luxury text-xs sm:text-sm text-gray-600 mt-2">
+          <p className="font-sans-luxury text-xs sm:text-sm text-[#e5e2e1]/70 mt-2">
             Aklınızdaki özel bilezik, alyans veya tektaş modelini ustanın maharetiyle kişiselleştirin.
           </p>
         </div>
-        <a
-          href="https://wa.me/905321234567?text=Merhaba%20Mehmet%20Hamdemirci%20Kuyumculuk,%20%C3%B6zel%20tasar%C4%B1m%20ve%20at%C3%B6lye%20sipari%C5%9Fi%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum."
-          target="_blank"
-          rel="noopener noreferrer"
-          className="px-6 py-3 bg-[#25D366] hover:bg-[#20bd5a] text-white font-sans-luxury text-xs font-bold uppercase tracking-wider rounded-lg shadow-xs whitespace-nowrap transition-all text-center inline-block"
+        <button
+          onClick={onOpenAppointment}
+          className="px-6 py-3 bg-[#d4af37] hover:bg-[#f2ca50] text-[#0f0f0f] font-sans-luxury text-xs font-semibold uppercase tracking-[0.2em] whitespace-nowrap transition-all"
         >
-          Atölyeye WhatsApp ile Danış
-        </a>
+          Tasarım Randevusu Al
+        </button>
       </div>
 
       {/* Modal for Item Details */}
       {activeItem && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in">
-          <div className="bg-white border border-gray-200 rounded-2xl max-w-2xl w-full p-6 sm:p-8 relative shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm animate-fadeIn">
+          <div className="bg-[#161616] border border-[#d4af37] max-w-2xl w-full p-6 sm:p-8 relative">
             <button
               onClick={() => setActiveItem(null)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-900 p-2 rounded-full hover:bg-gray-100 transition-colors"
+              className="absolute top-4 right-4 text-[#e5e2e1]/60 hover:text-white"
             >
-              <X className="w-5 h-5" />
+              <X className="w-6 h-6" />
             </button>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-center">
-              <div className="aspect-square bg-gray-50 border border-gray-200 rounded-xl overflow-hidden">
+              <div className="aspect-square bg-black border border-[#f7e7ce]/15 overflow-hidden">
                 <img
                   src={activeItem.imageUrl}
                   alt={activeItem.title}
@@ -162,42 +163,42 @@ export const CollectionPreview: React.FC<CollectionPreviewProps> = () => {
                 />
               </div>
 
-              <div className="space-y-3.5">
-                <span className="text-[10px] font-sans-luxury uppercase tracking-wider text-[#996515] font-bold">
+              <div className="space-y-4">
+                <span className="text-[10px] font-sans-luxury uppercase tracking-[0.25em] text-[#d4af37]">
                   {activeItem.categoryLabel}
                 </span>
-                <h3 className="font-serif-luxury text-xl sm:text-2xl text-gray-900 font-bold">
+                <h3 className="font-serif-luxury text-2xl text-[#f7e7ce]">
                   {activeItem.title}
                 </h3>
-                <div className="inline-block px-2.5 py-0.5 bg-amber-50 border border-amber-200 text-xs font-sans-luxury font-bold text-[#996515] rounded">
+                <div className="inline-block px-3 py-1 bg-[#1f1d17] border border-[#d4af37]/40 text-xs font-sans-luxury text-[#f2ca50]">
                   {activeItem.karat}
                 </div>
-                <p className="text-xs text-gray-600 font-sans-luxury leading-relaxed">
+                <p className="text-xs text-[#e5e2e1]/80 font-sans-luxury leading-relaxed">
                   {activeItem.description}
                 </p>
 
-                <div className="space-y-1.5 pt-2 border-t border-gray-100">
-                  <span className="text-[10px] uppercase tracking-wider text-gray-400 font-sans-luxury font-bold">
+                <div className="space-y-2 pt-2 border-t border-[#f7e7ce]/10">
+                  <span className="text-[10px] uppercase tracking-wider text-[#e5e2e1]/50 font-sans-luxury">
                     Öne Çıkan Nitelikler:
                   </span>
                   {activeItem.highlights.map((h, idx) => (
-                    <div key={idx} className="flex items-center gap-2 text-xs text-gray-700">
-                      <Check className="w-3.5 h-3.5 text-[#c89d3a]" />
+                    <div key={idx} className="flex items-center gap-2 text-xs text-[#f7e7ce]">
+                      <Check className="w-3.5 h-3.5 text-[#d4af37]" />
                       <span>{h}</span>
                     </div>
                   ))}
                 </div>
 
-                <div className="pt-3">
-                  <a
-                    href={`https://wa.me/${CONTACT_INFO.whatsappRaw}?text=${encodeURIComponent(`Merhaba, ${activeItem.title} koleksiyon modeli hakkında bilgi ve fiyat almak istiyorum.`)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-2.5 bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs uppercase font-sans-luxury font-bold tracking-wider rounded-lg shadow-xs transition-colors flex items-center justify-center gap-2"
+                <div className="pt-4 flex flex-col gap-2">
+                  <button
+                    onClick={() => {
+                      setActiveItem(null);
+                      onOpenWaitlist();
+                    }}
+                    className="w-full py-2.5 bg-[#d4af37] hover:bg-[#f2ca50] text-[#0f0f0f] text-xs uppercase font-sans-luxury font-semibold tracking-wider"
                   >
-                    <MessageSquare className="w-4 h-4" />
-                    <span>WhatsApp ile Fiyat & Bilgi Al</span>
-                  </a>
+                    Bu Ürün İçin VIP Lansman Uyarısı Al
+                  </button>
                 </div>
               </div>
             </div>

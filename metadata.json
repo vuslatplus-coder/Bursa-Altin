@@ -1,6 +1,6 @@
 {
   "name": "Bursa Altın - Mehmet Hamdemirci Kuyumculuk",
-  "description": "Bursa Altın Mehmet Hamdemirci Kuyumculuk lüks mücevherat ve altın deneyimi. Kapsamlı ürün kataloğu, 22 ayar hasır bilezikler, pırlanta tektaşlar, canlı Kapalıçarşı altın kurları, altın ve sarrafiye hesaplayıcı ve doğrudan sarraf danışmanlığı.",
+  "description": "Bursa Altın lüks mücevherat ve altın deneyimi. Canlı altın kurları, manifesto, özel koleksiyon önizlemesi ve VIP bekleme listesi.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
